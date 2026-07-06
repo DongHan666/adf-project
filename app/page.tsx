@@ -4,13 +4,13 @@ import { useState } from 'react';
 
 export default function ADF001() {
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: '欢迎来到 ADF-001 创意孵化中心 v1.4\n我是你的 AI 导演。\n\n告诉我一句话你的创意，我会孵化项目并支持完整角色设计。' }
+    { role: 'assistant', content: '欢迎来到 ADF-001 创意孵化中心 v1.5\n我是你的 AI 导演。\n\n告诉我一句话你的创意，我会孵化项目并支持完整角色设计。' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [currentBible, setCurrentBible] = useState('');
   const [showRoleDesign, setShowRoleDesign] = useState(false);
-  const [currentRole, setCurrentRole] = useState<any>(null);
+  const [roles, setRoles] = useState<any[]>([]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -25,11 +25,11 @@ export default function ADF001() {
       const bible = generateProjectBible(currentInput);
       setCurrentBible(bible);
 
-      const response = `【导演观察】${currentInput}\n\n【导演判断】潜力良好。\n\n【爆款评分】85分\n\n【导演建议】强化视觉钩子和冲突。\n\n${bible}`;
+      const response = `【导演观察】${currentInput}\n\n【爆款评分】86分\n\n【导演建议】建议强化视觉钩子和角色弧光。\n\n${bible}`;
 
       setMessages(prev => [...prev, { role: 'assistant', content: response }]);
       setIsLoading(false);
-    }, 1200);
+    }, 1300);
   };
 
   const generateProjectBible = (idea: string) => {
@@ -39,41 +39,50 @@ export default function ADF001() {
 类型：末日 + 系统流
 平台：抖音 9:16 竖屏
 
-核心卖点：前3秒强视觉钩子 + 主角觉醒
+核心卖点：强视觉钩子 + 情感重生
 
 下一步：点击下方按钮进入**角色设计**。`;
   };
 
   const startRoleDesign = () => {
     setShowRoleDesign(true);
-    setCurrentRole({
-      name: "林辰",
-      age: 28,
-      height: "185cm",
-      appearance: "运动员体型，左臂有明显刀疤，锐利眼神，短黑发，废土风格作战服",
-      personality: "冷静、坚韧、腹黑、保护欲强",
-      currentGoal: "找到重生真相，保护重要的人",
-      finalGoal: "改变末日命运",
-      weakness: "对过去的执念",
-      keyAction: "左臂疤痕觉醒时瞳孔收缩，握紧武器"
-    });
+    const defaultRoles = [
+      {
+        name: "林辰",
+        role: "主角",
+        age: 28,
+        appearance: "185cm，运动员体型，左臂明显刀疤，锐利眼神，短黑发，废土作战服",
+        personality: "冷静、坚韧、腹黑、保护欲强",
+        currentGoal: "找到重生真相",
+        finalGoal: "改变末日命运",
+        keyVisual: "左臂疤痕觉醒时瞳孔收缩，握紧武器"
+      },
+      {
+        name: "苏婉",
+        role: "女主",
+        age: 26,
+        appearance: "170cm，黑色长发，坚韧眼神，废土战术服",
+        personality: "聪明、果敢、外冷内热",
+        currentGoal: "寻找失散家人",
+        finalGoal: "与林辰并肩改变世界"
+      }
+    ];
+    setRoles(defaultRoles);
     setMessages(prev => [...prev, { 
       role: 'assistant', 
-      content: '【角色设计模式已开启】\n\n主角模板已生成。请告诉我需要调整哪些属性，或直接确认生成角色 Prompt。' 
+      content: '【角色设计模式已开启】\n\n已为你生成主角和女主模板。你可以告诉我需要调整哪个角色，或直接生成 Prompt。' 
     }]);
   };
 
-  const generateRolePrompt = () => {
-    if (!currentRole) return;
-    const prompt = `一个28岁亚洲男性，名叫${currentRole.name}，身高${currentRole.height}，运动员体型，左臂有明显刀疤，锐利眼神，短黑发，${currentRole.appearance}，${currentRole.personality}的表情，${currentRole.keyAction}，废土电影风格，高细节，电影光影，8k`;
-    
-    alert(`✅ 角色 Prompt 已生成！\n\n${prompt}\n\n已复制到剪贴板（开发中）`);
+  const generateRolePrompt = (role: any) => {
+    const prompt = `一个${role.age}岁亚洲${role.role === '主角' ? '男性' : '女性'}，名叫${role.name}，${role.appearance}，${role.personality}的表情，${role.keyVisual || '高细节电影感'}，废土电影风格，锐利眼神，8k，电影光影，高细节 --ar 3:4`;
     navigator.clipboard.writeText(prompt);
+    alert(`✅ ${role.name} 的生图 Prompt 已复制！\n\n${prompt}`);
   };
 
   const exportBible = () => {
     if (!currentBible) return alert('请先生成 Project Bible');
-    const content = `# ADF Project Bible\n\n${currentBible}`;
+    const content = `# ADF Project Bible v1.5\n\n${currentBible}`;
     const blob = new Blob([content], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -88,9 +97,9 @@ export default function ADF001() {
     <div className="min-h-screen bg-zinc-950 text-white p-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold mb-2">ADF - AI 戏剧工厂</h1>
-        <p className="text-xl text-zinc-400 mb-8">AI 影视导演 · 创意孵化中心 v1.4</p>
+        <p className="text-xl text-zinc-400 mb-8">AI 影视导演 · 创意孵化中心 v1.5</p>
 
-        <div className="bg-zinc-900 rounded-3xl h-[800px] flex flex-col overflow-hidden border border-zinc-700">
+        <div className="bg-zinc-900 rounded-3xl h-[820px] flex flex-col overflow-hidden border border-zinc-700">
           <div className="flex-1 p-8 overflow-y-auto space-y-8 text-[15px]">
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -132,23 +141,27 @@ export default function ADF001() {
               </button>
             )}
 
-            {showRoleDesign && currentRole && (
-              <div className="bg-zinc-800 p-6 rounded-2xl space-y-4">
-                <h3 className="text-lg font-bold">角色圣经 - {currentRole.name}</h3>
-                <pre className="text-sm whitespace-pre-wrap text-zinc-300 bg-zinc-900 p-4 rounded-xl">
-                  年龄：{currentRole.age}岁 | 身高：{currentRole.height}
-                  外貌：{currentRole.appearance}
-                  性格：{currentRole.personality}
-                  当前目标：{currentRole.currentGoal}
-                  最终目标：{currentRole.finalGoal}
-                  最大弱点：{currentRole.weakness}
-                </pre>
-                <button 
-                  onClick={generateRolePrompt}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-medium"
-                >
-                  生成角色 Prompt（用于生图）
-                </button>
+            {showRoleDesign && roles.length > 0 && (
+              <div className="space-y-6 max-h-96 overflow-y-auto">
+                <h3 className="text-lg font-bold">角色圣经</h3>
+                {roles.map((role, index) => (
+                  <div key={index} className="bg-zinc-800 p-6 rounded-2xl">
+                    <h4 className="font-bold text-lg mb-3">{role.name} ({role.role})</h4>
+                    <pre className="text-sm whitespace-pre-wrap text-zinc-300">
+                      年龄：{role.age}岁\n
+                      外貌：{role.appearance}\n
+                      性格：{role.personality}\n
+                      当前目标：{role.currentGoal}\n
+                      最终目标：{role.finalGoal}
+                    </pre>
+                    <button 
+                      onClick={() => generateRolePrompt(role)}
+                      className="mt-4 w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-medium"
+                    >
+                      生成 {role.name} 生图 Prompt
+                    </button>
+                  </div>
+                ))}
               </div>
             )}
           </div>
