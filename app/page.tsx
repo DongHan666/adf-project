@@ -111,4 +111,23 @@ export default function ADF001() {
               <button
                 onClick={sendMessage}
                 disabled={isLoading || !input.trim()}
-                className="bg-emerald-500 hover:bg-emerald-600 disabled:bg-zinc
+                className="bg-emerald-500 hover:bg-emerald-600 disabled:bg-zinc-700 px-10 rounded-2xl font-medium"
+              >
+                发送
+              </button>
+            </div>
+
+            {currentBible && (
+              <button
+                onClick={exportBible}
+                className="w-full bg-white text-black py-4 rounded-2xl font-medium hover:bg-zinc-200 flex items-center justify-center gap-2"
+              >
+                📥 导出完整 Project Bible (Markdown)
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
