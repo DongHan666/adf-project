@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export default function ADF001() {
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: '欢迎来到 ADF-001 创意孵化中心 v1.1\n我是你的 AI 导演。\n\n告诉我一句话你的创意，我会严格按照创作标准 + 爆款判断标准进行分析。' }
+    { role: 'assistant', content: '欢迎来到 ADF-001 创意孵化中心 v1.2\n我是你的 AI 导演。\n\n告诉我一句话你的创意，我会严格按照创作标准 + 爆款判断标准进行专业孵化。' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -23,44 +23,44 @@ export default function ADF001() {
       const bible = generateProjectBible(currentInput);
       setCurrentBible(bible);
 
-      const response = `【导演观察】${currentInput}\n\n【导演判断】这是一个具有视觉冲击力和情感潜力的方向。\n\n【爆款评分】${getScore(currentInput)}分\n\n【导演建议】${getSuggestions(currentInput)}\n\n${bible}`;
+      const response = `【导演观察】${currentInput}\n\n【导演判断】这是一个具有强视觉和系列潜力的方向。\n\n【爆款评分】${getScore(currentInput)}分\n\n【导演建议】${getSuggestions(currentInput)}\n\n${bible}\n\n【下一步】需要我立即进入角色设计阶段吗？`;
 
       setMessages(prev => [...prev, { role: 'assistant', content: response }]);
       setIsLoading(false);
-    }, 1300);
+    }, 1400);
   };
 
   const getScore = (idea: string) => {
-    if (idea.includes('末日') || idea.includes('重生')) return 85;
-    return Math.floor(Math.random() * 15) + 78;
+    if (idea.includes('末日') || idea.includes('重生')) return 87;
+    if (idea.includes('修仙') || idea.includes('系统')) return 82;
+    return 78 + Math.floor(Math.random() * 10);
   };
 
   const getSuggestions = (idea: string) => {
-    return "强烈建议强化前3秒视觉钩子（爆炸/觉醒），并确保每集都有明确冲突。角色设计需支持长期系列化。";
+    return "建议前3秒使用强视觉钩子（爆炸/觉醒/坠落），严格遵守画面优先原则，每集保持高密度冲突。角色设计需支持长期系列化。";
   };
 
   const generateProjectBible = (idea: string) => {
-    return `【Project Bible 正式版】
+    return `【Project Bible 正式版 v1.2】
 
-项目名称：${idea.includes('末日') ? '末日重生' : '新项目名称'}
+项目名称：${idea.includes('末日') ? '末日重生' : '新项目'}
 一句话简介：${idea}
 类型：末日 + 系统流
 平台：抖音 / 红果 9:16 竖屏
-风格：废土电影感 / 高燃国风
+风格：废土电影感
 
 核心卖点：
-- 前3秒强视觉钩子：陨石坠落 + 主角左臂疤痕觉醒
-- 情感价值：重生后的生存挣扎与逆袭成长
-- 系列潜力：支持多季扩展，角色弧光完整
+• 前3秒钩子：陨石坠落 + 主角左臂疤痕觉醒
+• 情感价值：重生后的生存挣扎与逆袭
+• 系列潜力：支持多季，角色弧光完整
 
 爆款判断：
-- 钩子强度：优秀
-- 冲突密度：良好
-- 传播潜力：高（视觉亮点 + 情绪共鸣）
-- 风险提示：注意题材饱和度，建议增加独特反转
+• 钩子强度：优秀
+• 冲突密度：良好
+• 传播潜力：高
+• 风险提示：注意题材饱和，建议增加独特反转
 
-下一步确认：
-你更倾向**爽文升级流**还是**黑暗求生流**？`;
+下一步：你想现在进入**角色设计**阶段吗？`;
   };
 
   const exportBible = () => {
@@ -68,7 +68,7 @@ export default function ADF001() {
       alert('请先生成 Project Bible');
       return;
     }
-    const content = `# ADF Project Bible\n\n生成时间：${new Date().toLocaleString('zh-CN')}\n\n${currentBible}`;
+    const content = `# ADF Project Bible v1.2\n生成时间：${new Date().toLocaleString('zh-CN')}\n\n${currentBible}`;
     const blob = new Blob([content], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -78,17 +78,16 @@ export default function ADF001() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    
-    alert('✅ Project Bible 已成功导出为 Markdown 文件！');
+    alert('✅ Project Bible 已成功导出！');
   };
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white p-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold mb-2">ADF - AI 戏剧工厂</h1>
-        <p className="text-xl text-zinc-400 mb-8">AI 影视导演 · 创意孵化中心 v1.1</p>
+        <p className="text-xl text-zinc-400 mb-8">AI 影视导演 · 创意孵化中心 v1.2</p>
 
-        <div className="bg-zinc-900 rounded-3xl h-[740px] flex flex-col overflow-hidden border border-zinc-700">
+        <div className="bg-zinc-900 rounded-3xl h-[760px] flex flex-col overflow-hidden border border-zinc-700">
           <div className="flex-1 p-8 overflow-y-auto space-y-8 text-[15px] leading-relaxed">
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -97,7 +96,7 @@ export default function ADF001() {
                 </div>
               </div>
             ))}
-            {isLoading && <div className="text-emerald-400">导演正在进行爆款分析与标准检查...</div>}
+            {isLoading && <div className="text-emerald-400">导演正在进行专业爆款分析...</div>}
           </div>
 
           <div className="p-6 border-t border-zinc-800 bg-zinc-950 space-y-4">
@@ -108,12 +107,12 @@ export default function ADF001() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
                 placeholder="输入你的创意，例如：我想做一个末日重生故事..."
-                className="flex-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-6 py-4 focus:outline-none focus:border-emerald-500 placeholder:text-zinc-500"
+                className="flex-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-6 py-4 focus:outline-none focus:border-emerald-500"
               />
               <button
                 onClick={sendMessage}
                 disabled={isLoading || !input.trim()}
-                className="bg-emerald-500 hover:bg-emerald-600 disabled:bg-zinc-700 px-10 rounded-2xl font-medium transition-colors"
+                className="bg-emerald-500 hover:bg-emerald-600 disabled:bg-zinc-700 px-10 rounded-2xl font-medium"
               >
                 发送
               </button>
