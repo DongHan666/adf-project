@@ -162,4 +162,7 @@ function RoleModule() {
   );
 }
 
-/* 其他模块占位（可继续完善
+/* 其他模块占位（可继续完善） */
+function WorldModule() { return <div className="p-10"><h2 className="text-4xl font-bold">世界观设定</h2><div className="bg-zinc-900 rounded-3xl p-20 text-center">🌍 开发中...</div></div>; }
+function StoryboardModule() { return <div className="p-10"><h2 className="text-4xl font-bold">分镜规划</h2><div className="bg-zinc-900 rounded-3xl p-20 text-center">🎬 开发中...</div></div>; }
+function ProjectsModule() { return <div className="p-10"><h2 className="text-4xl font-bold">我的项目库</h2><div className="bg-zinc-900 rounded-3xl p-20 text-center">📁 开发中...</div></div>; }
