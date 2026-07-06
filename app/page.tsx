@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export default function ADF001() {
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: '欢迎来到 ADF-001 创意孵化中心 v1.2\n我是你的 AI 导演。\n\n告诉我一句话你的创意，我会严格按照创作标准 + 爆款判断标准进行专业孵化。' }
+    { role: 'assistant', content: '欢迎来到 ADF-001 创意孵化中心 v1.2\n我是你的 AI 导演。\n\n告诉我一句话你的创意，我会严格按照创作标准进行孵化。' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -23,25 +23,24 @@ export default function ADF001() {
       const bible = generateProjectBible(currentInput);
       setCurrentBible(bible);
 
-      const response = `【导演观察】${currentInput}\n\n【导演判断】这是一个具有强视觉和系列潜力的方向。\n\n【爆款评分】${getScore(currentInput)}分\n\n【导演建议】${getSuggestions(currentInput)}\n\n${bible}\n\n【下一步】需要我立即进入角色设计阶段吗？`;
+      const response = `【导演观察】${currentInput}\n\n【导演判断】这是一个具有视觉冲击力和系列潜力的方向。\n\n【爆款评分】${getScore(currentInput)}分\n\n【导演建议】${getSuggestions(currentInput)}\n\n${bible}`;
 
       setMessages(prev => [...prev, { role: 'assistant', content: response }]);
       setIsLoading(false);
-    }, 1400);
+    }, 1300);
   };
 
   const getScore = (idea: string) => {
     if (idea.includes('末日') || idea.includes('重生')) return 87;
-    if (idea.includes('修仙') || idea.includes('系统')) return 82;
-    return 78 + Math.floor(Math.random() * 10);
+    return 79 + Math.floor(Math.random() * 12);
   };
 
   const getSuggestions = (idea: string) => {
-    return "建议前3秒使用强视觉钩子（爆炸/觉醒/坠落），严格遵守画面优先原则，每集保持高密度冲突。角色设计需支持长期系列化。";
+    return "强烈建议强化前3秒视觉钩子，每集保持高密度冲突，角色设计需支持长期系列创作。";
   };
 
   const generateProjectBible = (idea: string) => {
-    return `【Project Bible 正式版 v1.2】
+    return `【Project Bible 正式版】
 
 项目名称：${idea.includes('末日') ? '末日重生' : '新项目'}
 一句话简介：${idea}
@@ -50,17 +49,17 @@ export default function ADF001() {
 风格：废土电影感
 
 核心卖点：
-• 前3秒钩子：陨石坠落 + 主角左臂疤痕觉醒
-• 情感价值：重生后的生存挣扎与逆袭
-• 系列潜力：支持多季，角色弧光完整
+• 前3秒强视觉钩子：陨石坠落 + 主角左臂疤痕觉醒
+• 情感价值：重生后的生存挣扎与逆袭成长
+• 系列潜力：支持多季扩展
 
 爆款判断：
 • 钩子强度：优秀
 • 冲突密度：良好
 • 传播潜力：高
-• 风险提示：注意题材饱和，建议增加独特反转
 
-下一步：你想现在进入**角色设计**阶段吗？`;
+下一步确认：
+你想现在进入**角色设计**阶段吗？`;
   };
 
   const exportBible = () => {
@@ -96,7 +95,7 @@ export default function ADF001() {
                 </div>
               </div>
             ))}
-            {isLoading && <div className="text-emerald-400">导演正在进行专业爆款分析...</div>}
+            {isLoading && <div className="text-emerald-400">导演正在深度分析...</div>}
           </div>
 
           <div className="p-6 border-t border-zinc-800 bg-zinc-950 space-y-4">
@@ -112,23 +111,4 @@ export default function ADF001() {
               <button
                 onClick={sendMessage}
                 disabled={isLoading || !input.trim()}
-                className="bg-emerald-500 hover:bg-emerald-600 disabled:bg-zinc-700 px-10 rounded-2xl font-medium"
-              >
-                发送
-              </button>
-            </div>
-
-            {currentBible && (
-              <button
-                onClick={exportBible}
-                className="w-full bg-white text-black py-4 rounded-2xl font-medium hover:bg-zinc-200 flex items-center justify-center gap-2"
-              >
-                📥 导出完整 Project Bible (Markdown)
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+                className="bg-emerald-500 hover:bg-emerald-600 disabled:bg-zinc
