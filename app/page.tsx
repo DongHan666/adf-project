@@ -122,4 +122,21 @@ function RoleModule() {
 
             <div className="flex gap-4 mt-8">
               <button onClick={() => generateImagePrompt(role)} className="flex-1 bg-emerald-600 hover:bg-emerald-700 py-4 rounded-2xl">生成生图 Prompt</button>
-              <button onClick={() => alert('角色详细描述功能开发中')} className="flex-1 bg-zinc-700 hover:bg-zinc-600 py-4 rounded-2xl">
+              <button onClick={() => alert('角色详细描述功能开发中')} className="flex-1 bg-zinc-700 hover:bg-zinc-600 py-4 rounded-2xl">角色描述</button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <button onClick={exportAllRoles} className="mt-10 w-full bg-white text-black py-5 rounded-2xl font-medium hover:bg-zinc-200">
+        📥 导出完整角色圣经 (Markdown)
+      </button>
+    </div>
+  );
+}
+
+/* 其他模块占位 */
+function IncubatorModule() { return <div className="p-10"><h2 className="text-4xl font-bold">创意孵化中心</h2><div className="bg-zinc-900 rounded-3xl p-20 text-center text-zinc-400">孵化中心开发中...</div></div>; }
+function WorldModule() { return <div className="p-10"><h2 className="text-4xl font-bold">世界观设定</h2><div className="bg-zinc-900 rounded-3xl p-20 text-center text-zinc-400">世界观模块开发中...</div></div>; }
+function StoryboardModule() { return <div className="p-10"><h2 className="text-4xl font-bold">分镜规划</h2><div className="bg-zinc-900 rounded-3xl p-20 text-center text-zinc-400">分镜模块开发中...</div></div>; }
+function ProjectsModule() { return <div className="p-10"><h2 className="text-4xl font-bold">我的项目库</h2><div className="bg-zinc-900 rounded-3xl p-20 text-center text-zinc-400">项目库开发中...</div></div>; }
