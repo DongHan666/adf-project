@@ -16,7 +16,7 @@ export default function ADF() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white flex">
       {/* 侧边栏 */}
-      <div className="w-72 bg-zinc-900 border-r border-zinc-700 p-6 flex flex-col fixed h-full">
+      <div className="w-72 bg-zinc-900 border-r border-zinc-700 p-6 flex flex-col fixed h-full overflow-y-auto">
         <div className="mb-10">
           <h1 className="text-3xl font-bold">ADF</h1>
           <p className="text-zinc-400 text-sm">AI 戏剧工厂 v2.0</p>
@@ -38,7 +38,7 @@ export default function ADF() {
         </nav>
       </div>
 
-      {/* 主内容区域 */}
+      {/* 主内容区 */}
       <div className="flex-1 ml-72">
         {activeModule === 'incubator' && <IncubatorModule />}
         {activeModule === 'roles' && <RoleModule />}
@@ -50,21 +50,9 @@ export default function ADF() {
   );
 }
 
-/* ==================== 孵化中心模块 ==================== */
-function IncubatorModule() {
-  return (
-    <div className="p-10">
-      <h2 className="text-4xl font-bold mb-8">创意孵化中心</h2>
-      <div className="bg-zinc-900 rounded-3xl p-10 text-center text-zinc-400 min-h-[600px]">
-        孵化中心聊天 + Project Bible 功能开发中...
-      </div>
-    </div>
-  );
-}
-
-/* ==================== 角色设计模块（完整版） ==================== */
+/* ==================== 角色设计模块（完整修复版） ==================== */
 function RoleModule() {
-  const [roles, setRoles] = useState([
+  const [roles, setRoles] = useState<any[]>([
     { name: "林辰", roleType: "主角", age: 28, height: "185cm", appearance: "运动员体型，左臂明显刀疤，锐利眼神，短黑发，废土作战服", personality: "冷静、坚韧、腹黑、保护欲强", currentGoal: "找到重生真相", finalGoal: "改变末日命运", weakness: "对过去的执念" },
     { name: "苏婉", roleType: "女主", age: 26, height: "170cm", appearance: "黑色长发，坚韧眼神，废土战术服", personality: "聪明、果敢、外冷内热", currentGoal: "寻找失散家人", finalGoal: "与林辰并肩改变世界", weakness: "对情感的犹豫" },
     { name: "老周", roleType: "导师", age: 45, height: "178cm", appearance: "胡须花白，独眼，机械义肢", personality: "经验丰富、可靠、话少", currentGoal: "守护幸存者营地", finalGoal: "找到末日真相", weakness: "身体伤病" }
@@ -75,21 +63,22 @@ function RoleModule() {
     setRoles([...roles, newRole]);
   };
 
-  const updateRole = (index: number, field: string, value: string) => {
+  const updateRole = (index: number, field: string, value: string | number) => {
     const newRoles = [...roles];
-    newRoles[index][field] = value;
+    (newRoles[index] as any)[field] = value;
     setRoles(newRoles);
   };
 
   const generateImagePrompt = (role: any) => {
     const prompt = `一个${role.age}岁亚洲${role.roleType.includes('主角') ? '男性' : '女性'}，名叫${role.name}，${role.appearance}，${role.personality}的表情，废土电影风格，高细节，电影光影，8k --ar 3:4`;
     navigator.clipboard.writeText(prompt);
-    alert(`✅ ${role.name} 生图 Prompt 已复制！`);
+    alert(`✅ ${role.name} 的生图 Prompt 已复制！`);
   };
 
   const exportAllRoles = () => {
+    if (roles.length === 0) return alert('暂无角色');
     let content = `# ADF 角色圣经 v2.0\n生成时间：${new Date().toLocaleString('zh-CN')}\n\n`;
-    roles.forEach(role => {
+    roles.forEach((role) => {
       content += `## ${role.name} (${role.roleType})\n\n`;
       content += `- 年龄：${role.age}岁\n- 身高：${role.height}\n- 外貌：${role.appearance}\n- 性格：${role.personality}\n- 当前目标：${role.currentGoal}\n- 最终目标：${role.finalGoal}\n- 最大弱点：${role.weakness}\n\n---\n\n`;
     });
@@ -133,20 +122,4 @@ function RoleModule() {
 
             <div className="flex gap-4 mt-8">
               <button onClick={() => generateImagePrompt(role)} className="flex-1 bg-emerald-600 hover:bg-emerald-700 py-4 rounded-2xl">生成生图 Prompt</button>
-              <button onClick={() => alert('角色详细描述开发中')} className="flex-1 bg-zinc-700 hover:bg-zinc-600 py-4 rounded-2xl">生成角色描述</button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <button onClick={exportAllRoles} className="mt-8 w-full bg-white text-black py-5 rounded-2xl font-medium hover:bg-zinc-200">
-        📥 导出完整角色圣经 (Markdown)
-      </button>
-    </div>
-  );
-}
-
-/* 其他模块占位 */
-function WorldModule() { return <div className="p-10"><h2 className="text-4xl font-bold">世界观设定</h2><div className="bg-zinc-900 rounded-3xl p-20 text-center text-2xl text-zinc-500">开发中...</div></div>; }
-function StoryboardModule() { return <div className="p-10"><h2 className="text-4xl font-bold">分镜规划</h2><div className="bg-zinc-900 rounded-3xl p-20 text-center text-2xl text-zinc-500">开发中...</div></div>; }
-function ProjectsModule() { return <div className="p-10"><h2 className="text-4xl font-bold">我的项目库</h2><div className="bg-zinc-900 rounded-3xl p-20 text-center text-2xl text-zinc-500">开发中...</div></div>; }
+              <button onClick={() => alert('角色详细描述功能开发中')} className="flex-1 bg-zinc-700 hover:bg-zinc-600 py-4 rounded-2xl">
